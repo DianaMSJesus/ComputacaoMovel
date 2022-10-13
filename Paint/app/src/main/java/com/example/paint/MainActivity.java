@@ -49,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        canvaFragment.requireView().setBackgroundColor(Color.argb(255,red,green,blue));
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.principal_menu,menu);
@@ -81,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         outState.putInt("RED",red);
         outState.putInt("GREEN",green);
         outState.putInt("BLUE",blue);
-
 
         super.onSaveInstanceState(outState);
     }
