@@ -16,14 +16,17 @@ public class Settings extends AppCompatActivity implements SeekBar.OnSeekBarChan
     //Variavél para enviar cor
     public static final String EXTRA_BACKGROUND = "#FF000000";
 
+
     View v_Color;
     SeekBar sRed, sGreen, sBlue;
-    Integer red = 0, green = 0, blue = 0, alfa = 255;
+    Integer red = 0, green = 0, blue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+
+        Intent intent = getIntent();
 
         //Conectar as variáveis aos componentes do display
         v_Color = findViewById(R.id.v_color);
@@ -31,10 +34,20 @@ public class Settings extends AppCompatActivity implements SeekBar.OnSeekBarChan
         sGreen = findViewById(R.id.s_Green);
         sBlue = findViewById(R.id.s_Blue);
 
+        red = intent.getIntExtra("FINAL_RED",0);
+        green = intent.getIntExtra("FINAL_GREEN",0);
+        blue = intent.getIntExtra("FINAL_BLUE",0);
+
+        sRed.setProgress(red);
+        sGreen.setProgress(green);
+        sBlue.setProgress(blue);
+
         //Verificar alterações nas SeekBars
         sRed.setOnSeekBarChangeListener(this);
         sGreen.setOnSeekBarChangeListener(this);
         sBlue.setOnSeekBarChangeListener(this);
+
+        v_Color.setBackgroundColor(Color.argb(255,red,green,blue));
     }
 
     @Override
@@ -52,39 +65,9 @@ public class Settings extends AppCompatActivity implements SeekBar.OnSeekBarChan
                 break;
         }
 
-        v_Color.setBackgroundColor(Color.argb(alfa,red,green,blue));
+        v_Color.setBackgroundColor(Color.argb(255,red,green,blue));
     }
 
-    private String HexCode(int red, int green, int blue){
-        String value = "";
-        String code = "#";
-
-        //Red
-        value = Integer.toHexString(red);
-        if (value.length() < 2){
-            code+="0" + value;
-        }else{
-            code+=value;
-        }
-
-        //Green
-        value = Integer.toHexString(green);
-        if (value.length() < 2){
-            code+="0" + value;
-        }else{
-            code+=value;
-        }
-
-        //Blue
-        value = Integer.toHexString(blue);
-        if (value.length() < 2){
-            code+="0" + value;
-        }else{
-            code+=value;
-        }
-
-        return code;
-    }
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
@@ -98,9 +81,10 @@ public class Settings extends AppCompatActivity implements SeekBar.OnSeekBarChan
 
     public void changeColor(View view){
         Intent intent = new Intent(this, MainActivity.class);
-        String color = HexCode(red,green,blue);
 
-        intent.putExtra(EXTRA_BACKGROUND, color);
+        intent.putExtra("FINAL_RED",red);
+        intent.putExtra("FINAL_GREEN",green);
+        intent.putExtra("FINAL_BLUE",blue);
 
         startActivity(intent);
     }

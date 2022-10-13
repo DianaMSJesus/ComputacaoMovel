@@ -18,21 +18,21 @@ import android.widget.RelativeLayout;
 public class MainActivity extends AppCompatActivity {
 
     private static Integer teste = 0;
+    Integer red = 0, green = 0, blue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
-        if(teste.equals(1)){
-            Intent intent = getIntent();
-            String color = intent.getStringExtra(Settings.EXTRA_BACKGROUND);
-            if(color==null){
-                color = "#FF000000";
-            }
-            ConstraintLayout main = findViewById(R.id.main);
-            main.setBackgroundColor(Color.parseColor(color));
-        }
+
+        Intent intent = getIntent();
+
+        red = intent.getIntExtra("FINAL_RED",0);
+        green = intent.getIntExtra("FINAL_GREEN",0);
+        blue = intent.getIntExtra("FINAL_BLUE",0);
+
+        ConstraintLayout main = findViewById(R.id.main);
+        main.setBackgroundColor(Color.argb(255,red,green,blue));
     }
 
     @Override
@@ -52,7 +52,13 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.settings:
                 teste = 1;
-                startActivity(new Intent(this, Settings.class));
+                Intent intentSettings = new Intent(this,Settings.class);
+
+                intentSettings.putExtra("FINAL_RED",red);
+                intentSettings.putExtra("FINAL_GREEN",green);
+                intentSettings.putExtra("FINAL_BLUE",blue);
+
+                startActivity(intentSettings);
                 return true;
         }
         return super.onOptionsItemSelected(item);
