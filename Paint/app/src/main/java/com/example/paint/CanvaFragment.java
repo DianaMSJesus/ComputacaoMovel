@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentResultListener;
 
 public class CanvaFragment extends Fragment {
 
-    Integer red = 0, green = 0, blue = 0;
     View canva;
 
     @Override

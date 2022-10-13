@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     CanvaFragment canvaFragment = new CanvaFragment();
     PalletFragment palletFragment = new PalletFragment();
-    Integer red = 0, green = 0, blue = 0;
+    Integer red = 255, green = 255, blue = 255;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +29,9 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        red = intent.getIntExtra("FINAL_RED",0);
-        green = intent.getIntExtra("FINAL_GREEN",0);
-        blue = intent.getIntExtra("FINAL_BLUE",0);
+        red = intent.getIntExtra("FINAL_RED",255);
+        green = intent.getIntExtra("FINAL_GREEN",255);
+        blue = intent.getIntExtra("FINAL_BLUE",255);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragmentCanvas,canvaFragment).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragmentPallete,palletFragment).commit();
@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().setFragmentResultListener("bundle", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                red = result.getInt("FG_RED",0);
-                green = result.getInt("FG_GREEN",0);
-                blue = result.getInt("FG_BLUE",0);
+                red = result.getInt("FG_RED",255);
+                green = result.getInt("FG_GREEN",255);
+                blue = result.getInt("FG_BLUE",255);
 
                 canvaFragment.requireView().setBackgroundColor(Color.argb(255,red,green,blue));
             }
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
                 startActivity(intentSettings);
                 return true;
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -95,9 +96,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        red = savedInstanceState.getInt("RED",0);
-        green = savedInstanceState.getInt("GREEN",0);
-        blue = savedInstanceState.getInt("BLUE",0);
+        red = savedInstanceState.getInt("RED",255);
+        green = savedInstanceState.getInt("GREEN",255);
+        blue = savedInstanceState.getInt("BLUE",255);
 
         canvaFragment.requireView().setBackgroundColor(Color.argb(255,red,green,blue));
     }

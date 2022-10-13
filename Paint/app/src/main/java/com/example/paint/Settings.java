@@ -15,7 +15,7 @@ public class Settings extends AppCompatActivity implements SeekBar.OnSeekBarChan
 
     View v_Color;
     SeekBar sRed, sGreen, sBlue;
-    Integer red = 0, green = 0, blue = 0;
+    Integer red = 255, green = 255, blue = 255;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +32,9 @@ public class Settings extends AppCompatActivity implements SeekBar.OnSeekBarChan
 
 
 
-        red = intent.getIntExtra("FINAL_RED",0);
-        green = intent.getIntExtra("FINAL_GREEN",0);
-        blue = intent.getIntExtra("FINAL_BLUE",0);
+        red = intent.getIntExtra("FINAL_RED",255);
+        green = intent.getIntExtra("FINAL_GREEN",255);
+        blue = intent.getIntExtra("FINAL_BLUE",255);
 
         sRed.setProgress(red);
         sGreen.setProgress(green);
