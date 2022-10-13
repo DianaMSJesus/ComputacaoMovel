@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentResultListener;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,7 +18,8 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static Integer teste = 0;
+    CanvaFragment canvaFragment = new CanvaFragment();
+    PalletFragment palletFragment = new PalletFragment();
     Integer red = 0, green = 0, blue = 0;
 
     @Override
@@ -31,8 +33,19 @@ public class MainActivity extends AppCompatActivity {
         green = intent.getIntExtra("FINAL_GREEN",0);
         blue = intent.getIntExtra("FINAL_BLUE",0);
 
-        ConstraintLayout main = findViewById(R.id.main);
-        main.setBackgroundColor(Color.argb(255,red,green,blue));
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragmentCanvas,canvaFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragmentPallete,palletFragment).commit();
+
+        getSupportFragmentManager().setFragmentResultListener("bundle", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                red = result.getInt("FG_RED",0);
+                green = result.getInt("FG_GREEN",0);
+                blue = result.getInt("FG_BLUE",0);
+
+                canvaFragment.requireView().setBackgroundColor(Color.argb(255,red,green,blue));
+            }
+        });
     }
 
     @Override
@@ -51,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.settings:
-                teste = 1;
                 Intent intentSettings = new Intent(this,Settings.class);
 
                 intentSettings.putExtra("FINAL_RED",red);
@@ -62,5 +74,26 @@ public class MainActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putInt("RED",red);
+        outState.putInt("GREEN",green);
+        outState.putInt("BLUE",blue);
+
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        red = savedInstanceState.getInt("RED",0);
+        green = savedInstanceState.getInt("GREEN",0);
+        blue = savedInstanceState.getInt("BLUE",0);
+
+        canvaFragment.requireView().setBackgroundColor(Color.argb(255,red,green,blue));
     }
 }

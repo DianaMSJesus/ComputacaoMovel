@@ -13,10 +13,6 @@ import android.widget.SeekBar;
 
 public class Settings extends AppCompatActivity implements SeekBar.OnSeekBarChangeListener{
 
-    //Variavél para enviar cor
-    public static final String EXTRA_BACKGROUND = "#FF000000";
-
-
     View v_Color;
     SeekBar sRed, sGreen, sBlue;
     Integer red = 0, green = 0, blue = 0;
