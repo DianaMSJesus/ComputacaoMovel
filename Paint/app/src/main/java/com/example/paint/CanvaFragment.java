@@ -37,7 +37,9 @@ public class CanvaFragment extends Fragment {
         bundle = new Bundle();
         if(savedInstanceState != null){
             bundle = savedInstanceState.getBundle("BUNDLE");
+            paintCanvas.setDrawColor(bundle.getInt("COLOR_RED"),bundle.getInt("COLOR_GREEN"),bundle.getInt("COLOR_BLUE"));
             paintCanvas.setDraw((ArrayList<PaintCanvas.SaveDraw>) bundle.getSerializable("DRAW"));
+
         }
 
         constraintLayout.addView(paintCanvas);// adds the created view to the screen
@@ -49,6 +51,9 @@ public class CanvaFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         bundle.putSerializable("DRAW", paintCanvas.getDraw());
+        bundle.putInt("COLOR_RED", paintCanvas.getRedValue());
+        bundle.putInt("COLOR_GREEN", paintCanvas.getGreenValue());
+        bundle.putInt("COLOR_BLUE", paintCanvas.getBlueValue());
         outState.putBundle("BUNDLE",bundle);
     }
 

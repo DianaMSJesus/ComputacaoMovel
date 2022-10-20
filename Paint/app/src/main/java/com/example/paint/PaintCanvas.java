@@ -23,18 +23,16 @@ public class PaintCanvas extends View implements View.OnTouchListener{
     private GestureDetector mGestureDetector;
 
     private static ArrayList<SaveDraw> listOfDraws = new ArrayList<>();
-    private SaveDraw draw = new SaveDraw(new Path(),initPaint());
+    private SaveDraw draw;
 
-    int finalRed , finalGreen , finalBlue;
+    private static int finalRed, finalGreen, finalBlue;
 
     public PaintCanvas(Context context, AttributeSet attrs, GestureDetector mGestureDetector){
         super(context,attrs);
         this.mGestureDetector = mGestureDetector;
         setOnTouchListener(this);
 
-        //setDrawColor(finalRed,finalGreen,finalBlue);
-
-        //draw = new SaveDraw(new Path(),initPaint());
+        draw = new SaveDraw(new Path(),initPaint());
     }
 
     public void setDraw(ArrayList<SaveDraw> saveDraws){
@@ -43,6 +41,18 @@ public class PaintCanvas extends View implements View.OnTouchListener{
 
     public ArrayList<SaveDraw> getDraw(){
         return listOfDraws;
+    }
+
+    public int getRedValue(){
+        return finalRed;
+    }
+
+    public int getGreenValue(){
+        return finalGreen;
+    }
+
+    public int getBlueValue(){
+        return finalBlue;
     }
 
     @Override
@@ -80,7 +90,6 @@ public class PaintCanvas extends View implements View.OnTouchListener{
                 break;
 
             case MotionEvent.ACTION_UP:
-
                 listOfDraws.add(draw);
                 draw = new SaveDraw(new Path(),initPaint());
                 performClick();
@@ -96,6 +105,9 @@ public class PaintCanvas extends View implements View.OnTouchListener{
 
     public void changeBackground(){
         Random color = new Random();
+
+        //setDrawColor(color.nextInt(256),color.nextInt(256),color.nextInt(256));
+
         backgroundColor = Color.argb(255,color.nextInt(256),color.nextInt(256),color.nextInt(256));
         setBackgroundColor(backgroundColor);
     }
@@ -111,7 +123,6 @@ public class PaintCanvas extends View implements View.OnTouchListener{
     }
 
     public Paint initPaint(){
-
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setStrokeWidth(20f);
