@@ -38,5 +38,13 @@ public class PalletFragment extends Fragment {
 
             getParentFragmentManager().setFragmentResult("bundle",bundle);
         });
+
+        view.findViewById(R.id.btn_green).setOnClickListener(view1 -> {
+            bundle.putInt("FG_RED",0);
+            bundle.putInt("FG_GREEN",255);
+            bundle.putInt("FG_BLUE",0);
+
+            getParentFragmentManager().setFragmentResult("bundle",bundle);
+        });
     }
 }

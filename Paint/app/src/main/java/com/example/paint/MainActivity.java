@@ -18,8 +18,8 @@ import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    CanvaFragment canvaFragment = new CanvaFragment();
-    PalletFragment palletFragment = new PalletFragment();
+    CanvaFragment canvaFragment;
+    PalletFragment palletFragment;
     Integer red = 255, green = 255, blue = 255;
 
     @Override
@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
         green = intent.getIntExtra("FINAL_GREEN",255);
         blue = intent.getIntExtra("FINAL_BLUE",255);
 
+        if(canvaFragment == null) canvaFragment = new CanvaFragment();
+        if(palletFragment == null) palletFragment = new PalletFragment();
+
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragmentCanvas,canvaFragment).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_fragmentPallete,palletFragment).commit();
 
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 green = result.getInt("FG_GREEN",255);
                 blue = result.getInt("FG_BLUE",255);
 
-                canvaFragment.requireView().setBackgroundColor(Color.argb(255,red,green,blue));
+                canvaFragment.paintCanvas.setDrawColor(red,green,blue);
             }
         });
     }
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        canvaFragment.requireView().setBackgroundColor(Color.argb(255,red,green,blue));
+        //canvaFragment.requireView().setBackgroundColor(Color.argb(255,red,green,blue));
     }
 
     @Override
@@ -100,6 +103,6 @@ public class MainActivity extends AppCompatActivity {
         green = savedInstanceState.getInt("GREEN",255);
         blue = savedInstanceState.getInt("BLUE",255);
 
-        canvaFragment.requireView().setBackgroundColor(Color.argb(255,red,green,blue));
+        //canvaFragment.requireView().setBackgroundColor(Color.argb(255,red,green,blue));
     }
 }

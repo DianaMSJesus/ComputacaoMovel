@@ -6,40 +6,52 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.text.AttributedCharacterIterator;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class PaintCanvas extends View implements View.OnTouchListener{
 
-    private Paint paint = new Paint();
-    private Path path = new Path();
     private int backgroundColor = Color.WHITE;
     private GestureDetector mGestureDetector;
 
+    private static ArrayList<SaveDraw> listOfDraws = new ArrayList<>();
+    private SaveDraw draw = new SaveDraw(new Path(),initPaint());
 
-    public PaintCanvas(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        setOnTouchListener(this);
-        setBackgroundColor(backgroundColor);
-        initPaint();
-    }
+    int finalRed , finalGreen , finalBlue;
 
     public PaintCanvas(Context context, AttributeSet attrs, GestureDetector mGestureDetector){
         super(context,attrs);
         this.mGestureDetector = mGestureDetector;
         setOnTouchListener(this);
-        setBackgroundColor(backgroundColor);
-        initPaint();
+
+        //setDrawColor(finalRed,finalGreen,finalBlue);
+
+        //draw = new SaveDraw(new Path(),initPaint());
+    }
+
+    public void setDraw(ArrayList<SaveDraw> saveDraws){
+        listOfDraws = saveDraws;
+    }
+
+    public ArrayList<SaveDraw> getDraw(){
+        return listOfDraws;
     }
 
     @Override
     protected void onDraw(Canvas canvas){
-        canvas.drawPath(path, paint);
+
+        for(SaveDraw sd : listOfDraws){
+            canvas.drawPath(sd.path, sd.color);
+        }
+        canvas.drawPath(draw.path,draw.color);
     }
 
     @Override
@@ -60,14 +72,17 @@ public class PaintCanvas extends View implements View.OnTouchListener{
 
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                path.moveTo(eventX,eventY);
+                draw.path.moveTo(eventX,eventY);
                 return true;
 
             case MotionEvent.ACTION_MOVE:
-                path.lineTo(eventX,eventY);
+                draw.path.lineTo(eventX,eventY);
                 break;
 
             case MotionEvent.ACTION_UP:
+
+                listOfDraws.add(draw);
+                draw = new SaveDraw(new Path(),initPaint());
                 performClick();
                 break;
 
@@ -86,14 +101,33 @@ public class PaintCanvas extends View implements View.OnTouchListener{
     }
 
     public void erase(){
-        paint.setColor(backgroundColor);
+        listOfDraws.clear();
     }
 
-    public void initPaint(){
+    public void setDrawColor(int red, int green, int blue){
+        finalRed = red;
+        finalGreen = green;
+        finalBlue = blue;
+    }
+
+    public Paint initPaint(){
+
+        Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setStrokeWidth(20f);
-        paint.setColor(Color.BLUE);
+        paint.setColor(Color.argb(255,finalRed,finalGreen,finalBlue));
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
+        return paint;
+    }
+
+    public static class SaveDraw implements Serializable {
+        private Path path;
+        private Paint color;
+
+        public SaveDraw(Path path, Paint color){
+            this.path = path;
+            this.color = color;
+        }
     }
 }
