@@ -120,6 +120,8 @@ public class PaintCanvas extends View implements View.OnTouchListener{
         finalRed = red;
         finalGreen = green;
         finalBlue = blue;
+
+        draw.color.setColor(Color.argb(255,finalRed,finalGreen,finalBlue));
     }
 
     public Paint initPaint(){
