@@ -30,8 +30,6 @@ public class Settings extends AppCompatActivity implements SeekBar.OnSeekBarChan
         sGreen = findViewById(R.id.s_Green);
         sBlue = findViewById(R.id.s_Blue);
 
-
-
         red = intent.getIntExtra("FINAL_RED",255);
         green = intent.getIntExtra("FINAL_GREEN",255);
         blue = intent.getIntExtra("FINAL_BLUE",255);

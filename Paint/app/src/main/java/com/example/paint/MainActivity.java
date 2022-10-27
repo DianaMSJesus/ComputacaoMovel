@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        //canvaFragment.paintCanvas.setDrawColor(red,green,blue);
         //canvaFragment.requireView().setBackgroundColor(Color.argb(255,red,green,blue));
     }
 

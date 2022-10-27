@@ -106,10 +106,13 @@ public class PaintCanvas extends View implements View.OnTouchListener{
     public void changeBackground(){
         Random color = new Random();
 
-        //setDrawColor(color.nextInt(256),color.nextInt(256),color.nextInt(256));
-
         backgroundColor = Color.argb(255,color.nextInt(256),color.nextInt(256),color.nextInt(256));
         setBackgroundColor(backgroundColor);
+    }
+
+    public void randomColorLine(){
+        Random color = new Random();
+        setDrawColor(color.nextInt(256),color.nextInt(256),color.nextInt(256));
     }
 
     public void erase(){
