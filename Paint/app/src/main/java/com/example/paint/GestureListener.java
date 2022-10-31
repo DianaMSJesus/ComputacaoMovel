@@ -14,7 +14,6 @@ public class GestureListener extends GestureDetector.SimpleOnGestureListener imp
     @Override
     public void onLongPress(MotionEvent motionEvent){
         canvas.randomColorLine();
-
     }
 
     public boolean onDoubleTap(MotionEvent motionEvent){

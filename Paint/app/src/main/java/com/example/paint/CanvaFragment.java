@@ -18,6 +18,7 @@ public class CanvaFragment extends Fragment {
 
     View canva;
     PaintCanvas paintCanvas;
+    Sensors sensors;
     Bundle bundle;
 
     @Override
@@ -33,6 +34,8 @@ public class CanvaFragment extends Fragment {
         paintCanvas = new PaintCanvas(getContext(), null, mGestureDetector);
         mGestureListener.setCanvas(paintCanvas);
 
+        sensors = new Sensors(getContext());
+        sensors.setCanvas(paintCanvas);
 
         bundle = new Bundle();
         if(savedInstanceState != null){
@@ -57,5 +60,15 @@ public class CanvaFragment extends Fragment {
         outState.putBundle("BUNDLE",bundle);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        sensors.onResume();
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        sensors.onPause();
+    }
 }

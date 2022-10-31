@@ -117,6 +117,7 @@ public class PaintCanvas extends View implements View.OnTouchListener{
 
     public void erase(){
         listOfDraws.clear();
+        invalidate();
     }
 
     public void setDrawColor(int red, int green, int blue){
