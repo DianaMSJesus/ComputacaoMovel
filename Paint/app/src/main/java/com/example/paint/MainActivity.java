@@ -83,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentSettings);
                 return true;
 
+            case R.id.map:
+                Intent intentMap = new Intent(this, Map.class);
+                startActivity(intentMap);
+                return true;
+
         }
         return super.onOptionsItemSelected(item);
     }

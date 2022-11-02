@@ -12,5 +12,10 @@
         android:title="Settings"
         app:showAsAction="ifRoom"/>
 
+    <item android:id="@+id/map"
+        android:icon="@drawable/ic_map"
+        android:title="Map"
+        app:showAsAction="ifRoom"/>
+
 
 </menu>
