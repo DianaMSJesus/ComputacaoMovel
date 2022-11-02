@@ -8,6 +8,8 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -31,6 +33,7 @@ public class Map extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
+
         supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.maps);
         user = LocationServices.getFusedLocationProviderClient(this);
 
@@ -41,7 +44,7 @@ public class Map extends AppCompatActivity {
             ActivityCompat.requestPermissions(Map.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
     }
-    
+
     private void getCurrentLocation(Task<Location> task) {
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
@@ -72,6 +75,22 @@ public class Map extends AppCompatActivity {
             }
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    public void startDrawing(View view){
+        Button btnStop = findViewById(R.id.btn_stopDrawing);
+        Button btnStart = findViewById(R.id.btn_startDrawing);
+        btnStart.setVisibility(View.GONE);
+        btnStop.setVisibility(View.VISIBLE);
+
+    }
+
+    public void stopDrawing(View view){
+        Button btnStop = findViewById(R.id.btn_stopDrawing);
+        Button btnStart = findViewById(R.id.btn_startDrawing);
+        btnStart.setVisibility(View.VISIBLE);
+        btnStop.setVisibility(View.GONE);
+
     }
 
 }
